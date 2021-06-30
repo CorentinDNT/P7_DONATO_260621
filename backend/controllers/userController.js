@@ -6,9 +6,9 @@ const db = require("../models");
 exports.userCreate = async (req, res, next) => {
 	try {
 		const username = req.body.username;
-
 		const email = req.body.email;
-		let password = req.body.password;
+		const password = req.body.password;
+
 		console.log(email);
 		console.log(username);
 		console.log(password);
@@ -17,17 +17,28 @@ exports.userCreate = async (req, res, next) => {
 				error: "informations manquantes. (email, pseudo ou mot de passe)",
 			});
 		}
+		let emailAdress = await db.User.findOne({ where: { email } });
 		let user = await db.User.findOne({ where: { username } });
+
+		if (emailAdress && user) {
+			return res.status(400).json({ error: "ce compte existe déjà" });
+		}
+
+		if (emailAdress) {
+			return res.status(400).json({ error: "adresse email déjà uttilisé" });
+		}
+
 		if (user) {
 			return res
 				.status(400)
 				.json({ error: "nom d'uttilisateur déjà uttilisé" });
 		}
-		password = await bcrypt.hash(password, 10);
-		user = await db.User.create({
+		const securePassword = await bcrypt.hash(password, 10);
+		const hashMail = await bcrypt.hash(email, 10);
+		const newUser = await db.User.create({
 			username,
-			password,
-			email,
+			password: securePassword,
+			email: hashMail,
 		});
 		await user.save();
 		return res
