@@ -2,12 +2,14 @@
 /*IMPORTS*/
 /*********/
 const express = require("express");
+const path = require("path");
 const app = express();
 
 /*********/
 /*ROUTES*/
 /*******/
-const userRoutes = require("./routes/userRoute");
+const authRoutes = require("./routes/authRoute");
+const postRoutes = require("./routes/postRoute");
 
 require("dotenv").config();
 
@@ -25,7 +27,9 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
+app.use("/images", express.static(path.join(__dirname, "images")));
 
-app.use("/api/user", userRoutes);
+app.use("/api/user", authRoutes);
+app.use("/api/post", postRoutes);
 
 module.exports = app;

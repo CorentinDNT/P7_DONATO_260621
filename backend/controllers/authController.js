@@ -3,8 +3,14 @@ const jwt = require("jsonwebtoken");
 
 const db = require("../models");
 
+//--- insérer des REGEX ici ---
+const emailRegEX =
+	/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const passwordRegEX = /^(?=.*\d).{4,8}$/;
+
 exports.userCreate = async (req, res, next) => {
 	try {
+		// Params
 		const username = req.body.username;
 		const email = req.body.email;
 		const password = req.body.password;
@@ -51,7 +57,20 @@ exports.userCreate = async (req, res, next) => {
 
 exports.userLogin = async (req, res, next) => {
 	const username = req.body.username;
-
-	let email = req.body.email;
 	let password = req.body.password;
+
+	if (!username || !password) {
+		return res.status(400).json({ error: "pseudo ou mot de passe manquant" });
+	}
+	const user = await db.User.findOne({ where: { username } });
+	if (!user) {
+		return res
+			.status(400)
+			.json({ error: "Aucun uttilisateur ne correspond à" + username });
+	}
+	const correctPassword = await bcrypt.compare(password, user.password);
+	if (!correctPassword) {
+		return res.status(400).json({ error: "mot de passe invalide" });
+	}
+	return res.status(200).json({ message: "connexion reussie" });
 };
