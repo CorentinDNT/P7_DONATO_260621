@@ -32,9 +32,65 @@ exports.createPost = async (req, res) => {
 			title,
 			content,
 		});
-		await post.save();
+		await createPost.save();
 		return res.status(201).json({ message: "post créer" });
 	} catch (error) {
 		res.status(400).json({ error });
+	}
+};
+exports.getPost = async (req, res) => {
+	try {
+		const id = req.params.id;
+		const post = await db.Post.findOne({ where: { id }, include: [db.User] });
+	} catch (error) {
+		return res.status(500).json({ error });
+	}
+};
+
+exports.getAllPosts = async (req, res) => {
+	try {
+		let posts = await db.Post.findAll({
+			include: [db.User],
+		});
+
+		if (!posts) {
+			return res.status(404).json({ rerror: "pas de messages trouvé" });
+		}
+		return res.status(200).json({ posts });
+	} catch (error) {
+		return res.status(500).json({ error });
+	}
+};
+
+exports.updatePost = async (req, res) => {
+	try {
+	} catch (error) {}
+};
+
+exports.deletePost = async (req, res) => {
+	const PostId = req.params.id;
+	const post = await db.Post.findOne({
+		where: { id: PostId },
+		include: [db.User],
+	});
+	if (post.attachment !== null) {
+		const filename = post.attachment.split("/images/")[1];
+		fs.unlink(`images/${filename}`, () => {
+			post
+				.deleteOne({ id: PostId })
+				.then(() => res.status(200).json({ message: "post supprimé" }))
+				.catch((e) => res.status(400).json({ e }));
+		});
+	}
+	if (!post) {
+		return res.status(404).json({ error: "post introuvable !" });
+	}
+	const deletingPost = await db.Post.destroy({
+		where: { id: PostId },
+	});
+	if (!deletingPost) {
+		throw new Error("veuillez réessayer plus tard, post introuvable");
+	} else {
+		res.status(200).json({ message: "post supprimé avec succèes !" });
 	}
 };

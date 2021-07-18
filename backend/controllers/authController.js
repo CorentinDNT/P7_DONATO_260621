@@ -46,7 +46,7 @@ exports.userCreate = async (req, res, next) => {
 			password: securePassword,
 			email: hashMail,
 		});
-		await user.save();
+		await newUser.save();
 		return res
 			.status(201)
 			.json({ message: "uttilisateur créer avec succès !" });
