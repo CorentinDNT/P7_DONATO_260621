@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const jwt = require("../middleware/jwt.utils");
 
 const db = require("../models");
 
@@ -47,6 +47,7 @@ exports.userCreate = async (req, res, next) => {
 			email: hashMail,
 		});
 		await newUser.save();
+		const token = await jwt.generateTokenForUser(newUser);
 		return res
 			.status(201)
 			.json({ message: "uttilisateur créer avec succès !" });
@@ -72,5 +73,10 @@ exports.userLogin = async (req, res, next) => {
 	if (!correctPassword) {
 		return res.status(400).json({ error: "mot de passe invalide" });
 	}
-	return res.status(200).json({ message: "connexion reussie" });
+	const token = await jwt.generateTokenForUser(user);
+	return res
+		.status(200)
+		.json({
+			message: "connexion reussie" + " " + jwt.generateTokenForUser(user),
+		});
 };
