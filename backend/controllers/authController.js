@@ -40,43 +40,49 @@ exports.userCreate = async (req, res, next) => {
 				.json({ error: "nom d'uttilisateur déjà uttilisé" });
 		}
 		const securePassword = await bcrypt.hash(password, 10);
-		const hashMail = await bcrypt.hash(email, 10);
 		const newUser = await db.User.create({
 			username,
 			password: securePassword,
-			email: hashMail,
+			email,
+			image: `${req.protocol}://${req.get(
+				"host"
+			)}/images/profilePics/default_profile_pics.png`,
+			isAdmin: false,
 		});
+		//bien sauvegarder la constante au dessus et pas la constante globale du try/catch (userCreate)
 		await newUser.save();
 		const token = await jwt.generateTokenForUser(newUser);
 		return res
 			.status(201)
-			.json({ message: "uttilisateur créer avec succès !" });
+			.json({ message: "l'uttilisateur " + username + " créer avec succès !" });
 	} catch (error) {
 		return res.status(500).json({ error });
 	}
 };
 
 exports.userLogin = async (req, res, next) => {
-	const username = req.body.username;
-	let password = req.body.password;
+	try {
+		const username = req.body.username;
+		let password = req.body.password;
 
-	if (!username || !password) {
-		return res.status(400).json({ error: "pseudo ou mot de passe manquant" });
-	}
-	const user = await db.User.findOne({ where: { username } });
-	if (!user) {
-		return res
-			.status(400)
-			.json({ error: "Aucun uttilisateur ne correspond à" + username });
-	}
-	const correctPassword = await bcrypt.compare(password, user.password);
-	if (!correctPassword) {
-		return res.status(400).json({ error: "mot de passe invalide" });
-	}
-	const token = await jwt.generateTokenForUser(user);
-	return res
-		.status(200)
-		.json({
+		if (!username || !password) {
+			return res.status(400).json({ error: "pseudo ou mot de passe manquant" });
+		}
+		const user = await db.User.findOne({ where: { username } });
+		if (!user) {
+			return res
+				.status(400)
+				.json({ error: "Aucun uttilisateur ne correspond à" + username });
+		}
+		const correctPassword = await bcrypt.compare(password, user.password);
+		if (!correctPassword) {
+			return res.status(400).json({ error: "mot de passe invalide" });
+		}
+		const token = await jwt.generateTokenForUser(user);
+		return res.status(200).json({
 			message: "connexion reussie" + " " + jwt.generateTokenForUser(user),
 		});
+	} catch (error) {
+		return res.status(500).json({ error });
+	}
 };

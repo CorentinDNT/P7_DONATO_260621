@@ -1,5 +1,6 @@
 const fs = require("fs");
 const db = require("../models");
+const jwtUtils = require("../middleware/jwt.utils");
 
 /*
 

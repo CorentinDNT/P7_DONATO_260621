@@ -2,6 +2,8 @@
 
 const fs = require("fs");
 const db = require("../models");
+const jwt = require("../middleware/jwt.utils");
+const bcrypt = require("bcrypt");
 
 exports.createPost = async (req, res) => {
 	try {
@@ -42,6 +44,12 @@ exports.getPost = async (req, res) => {
 	try {
 		const id = req.params.id;
 		const post = await db.Post.findOne({ where: { id }, include: [db.User] });
+
+		if (!post) {
+			return res.status(404).json({ error: "post inexistant " });
+		}
+
+		return res.status(200).json({ post });
 	} catch (error) {
 		return res.status(500).json({ error });
 	}
@@ -64,7 +72,91 @@ exports.getAllPosts = async (req, res) => {
 
 exports.updatePost = async (req, res) => {
 	try {
-	} catch (error) {}
+		const PostId = req.params.id;
+		const isAdmin = jwt.isAdmin(req);
+
+		const newTitle = req.body.newTitle;
+		const newContent = req.body.newContent;
+
+		const post = await db.Post.findOne({
+			where: { id: PostId },
+			include: [db.User],
+		});
+
+		if (!post) {
+			return res.status(404).json({ error: "poste introuvable" });
+		}
+
+		const existantPost = await db.Post.findOne({ where: { title: newTitle } });
+		if (existantPost) {
+			return res
+				.status(400)
+				.json({ error: "Ce titre existe déjà, merci d'en choisir un autre" });
+		}
+
+		if (isAdmin) {
+			post.title = newTitle;
+			post.content = newContent;
+
+			await post.save();
+
+			return res
+				.status(200)
+				.json({ message: "changements éffectués par un administrateur" });
+		}
+
+		post.title = newTitle;
+		post.content = newContent;
+
+		await post.save();
+
+		return res.status(200).json({ message: "changements éffectués" });
+	} catch (error) {
+		return res.status(500).json({ error });
+	}
+};
+
+exports.updatePostImage = async (req, res) => {
+	try {
+		const PostId = req.params.id;
+		const password = req.body.password;
+		const file = req.file;
+		const isAdmin = jwt.isAdmin(req);
+
+		const post = await db.Post.findOne({
+			where: { id: PostId },
+			include: [db.User],
+		});
+		if (!post) {
+			return res.status(404).json({ message: "poste introuvable" });
+		}
+
+		if (isAdmin) {
+			const filename = post.attachment.split("/postsPics")[1];
+			fs.unlink(`images/postsPics${filename}`, () => {});
+			post.attachment = `${req.protocol}://${req.get(
+				"host"
+			)}/images/postsPics/${file.filename}`;
+
+			await post.save();
+
+			return res
+				.status(200)
+				.json({ message: "changements éffectués par un Administrateur" });
+		}
+
+		const filename = post.attachment.split("/postsPics")[1];
+		fs.unlink(`images/postsPics${filename}`, () => {});
+		post.attachment = `${req.protocol}://${req.get("host")}/images/postsPics/${
+			file.filename
+		}`;
+
+		await post.save();
+
+		return res.status(200).json({ message: "changement d'image éffectué" });
+	} catch (error) {
+		return res.status(500).json({ error });
+	}
 };
 
 exports.deletePost = async (req, res) => {
