@@ -1,0 +1,16 @@
+//UTILS
+@import "../sass/utils/mixins";
+@import "../sass/utils/valirables";
+
+//BASE
+@import "../sass/base/base";
+
+//COMPONENTS
+
+//LAYOUTS
+@import "../sass/layout/header.scss";
+@import "../sass/layout/footer.scss";
+
+//PAGES
+@import "../sass/pages/index";
+@import "../sass/pages/post";

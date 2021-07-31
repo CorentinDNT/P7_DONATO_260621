@@ -15,9 +15,6 @@ exports.userCreate = async (req, res, next) => {
 		const email = req.body.email;
 		const password = req.body.password;
 
-		console.log(email);
-		console.log(username);
-		console.log(password);
 		if (!username || !password || !email) {
 			return res.status(400).json({
 				error: "informations manquantes. (email, pseudo ou mot de passe)",
@@ -52,9 +49,9 @@ exports.userCreate = async (req, res, next) => {
 		//bien sauvegarder la constante au dessus et pas la constante globale du try/catch (userCreate)
 		await newUser.save();
 		const token = await jwt.generateTokenForUser(newUser);
-		return res
-			.status(201)
-			.json({ message: "l'uttilisateur " + username + " créer avec succès !" });
+		return res.status(201).json({
+			message: "l'uttilisateur " + username + " créer avec succès!" + token,
+		});
 	} catch (error) {
 		return res.status(500).json({ error });
 	}
@@ -80,7 +77,7 @@ exports.userLogin = async (req, res, next) => {
 		}
 		const token = await jwt.generateTokenForUser(user);
 		return res.status(200).json({
-			message: "connexion reussie" + " " + jwt.generateTokenForUser(user),
+			message: "connexion reussie " + jwt.generateTokenForUser(user),
 		});
 	} catch (error) {
 		return res.status(500).json({ error });
