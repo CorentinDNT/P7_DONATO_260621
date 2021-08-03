@@ -1,7 +1,26 @@
 const postId = new URLSearchParams(window.location.search).get("id");
 console.log(postId);
 
+const insertCommentBody = document.querySelector("#js-addComment");
 const insertPostId = document.querySelector("#js-insertPostById");
+const btnSendForm = document.querySelector("#btn");
+// const contentCommentText = document.querySelector("#contentText").value;
+
+// console.log("contentCommentText");
+// console.log(contentCommentText);
+
+const token = localStorage.getItem("token");
+let splitedToken = token.split(".");
+console.log(splitedToken);
+
+let atobToken = atob(splitedToken[1]);
+console.log(atobToken);
+
+let atobParse = JSON.parse(atobToken);
+console.log(atobParse);
+
+const userId = atobParse.userId;
+console.log(userId);
 
 fetch("http://localhost:3000/api/post/" + postId)
 	.then((res) => {
@@ -27,12 +46,34 @@ fetch("http://localhost:3000/api/post/" + postId)
                     <figcaption class="caption">
                         <p id='postTitle'>${post.title}</p>
                         <p id='postContent'>${post.content}</p>
-                    </figcaption>
+                    </figcaption> 
                 </figure>
 			</div>
             `;
 
 			insertPostId.insertAdjacentHTML("beforeend", selectedPost);
+
+			btnSendForm.addEventListener("click", (e) => {
+				e.preventDefault();
+
+				const commentBody = {
+					UserId: userId,
+					content: document.querySelector("#contentText").value,
+				};
+
+				console.log("commentBody");
+				console.log(commentBody);
+
+				fetch("http://localhost:3000/api/post/" + postId + "/comment", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify(commentBody),
+				})
+					.then((res) => res.json())
+					.then((value) => {
+						window.location.reload();
+					});
+			});
 		});
 	})
 	.catch();
@@ -40,11 +81,16 @@ fetch("http://localhost:3000/api/post/" + postId)
 console.log("postId");
 console.log(postId);
 console.log("postId");
+
+fetch("");
 const insertComment = document.querySelector("#js-insertComment");
 
 fetch("http://localhost:3000/api/post/" + postId + "/comment").then((res) => {
 	console.log(res.status + " fetch numéro 2");
 	res.json().then((value) => {
+		console.log("value");
+		console.log(value);
+		console.log("value");
 		if (value.message) {
 			console.log(value.message);
 			const noComment = value.message;
@@ -54,17 +100,24 @@ fetch("http://localhost:3000/api/post/" + postId + "/comment").then((res) => {
 			console.log(comment, "commentaire numéro ", +i);
 
 			const commentItem = `
-				<a href="#" class="link-id">
-					<figure class="figure">
-						<figcaption class="caption">
-							<p>${comment.User.username}</p>
-							<p>${comment.content} euros</p> 
-						</figcaption>
-					</figure>
-				</a>
+			<div class="commentContainer">
+				<div class="username">
+					<p>${comment.User.username}</p>
+				</div>
+
+				<div class="content">
+					<p>${comment.content}</p>
+				</div>
+
+				<button class='deleteComment' id='js-deleteSelf'>Supprimer le commentaire</button>
+				</div>
 			`;
 
 			insertComment.insertAdjacentHTML("beforeend", commentItem);
+
+			const deleteCom = document.querySelectorAll(".deleteComment");
+			console.log("deleteCom");
+			console.log(deleteCom);
 		}
 	}).catch;
 });

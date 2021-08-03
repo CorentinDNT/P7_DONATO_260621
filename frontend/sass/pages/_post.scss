@@ -1,7 +1,6 @@
 #js-insertPostById {
 	@include flexMid;
 	flex-wrap: wrap;
-	border: 3px solid red;
 	font-family: sans-serif;
 
 	.postBody {
@@ -13,7 +12,7 @@
 
 		color: black;
 		text-decoration: none;
-		margin: 30px 0;
+		margin: 5px 0 5px 0;
 		border-radius: 15px;
 		box-shadow: 1px 1px 5px rgb(0, 0, 0);
 		transition: box-shadow 0.2s;
@@ -60,6 +59,8 @@
 					padding: 5px;
 
 					text-transform: uppercase;
+					text-align: center;
+					text-decoration: underline;
 				}
 				#postContent {
 					background-color: lightgray;
@@ -68,6 +69,84 @@
 					font-weight: 550;
 				}
 			}
+		}
+	}
+}
+
+#js-insertComment {
+	@include flexMid;
+	flex-direction: column;
+	font-family: sans-serif;
+	.commentContainer {
+		@include wh(90%);
+		@include flexMid;
+		flex-direction: column;
+		flex-wrap: wrap;
+
+		border-radius: 2px;
+		box-shadow: 1px 1px 5px rgb(0, 0, 0);
+		margin: 15px 0;
+		.username {
+			font-weight: 550;
+			text-transform: uppercase;
+			margin-bottom: 10px;
+			border-bottom: 1px solid black;
+			background-color: lightgray;
+			text-align: center;
+			width: 100%;
+			padding: 10px 0;
+		}
+		.content {
+			text-align: center;
+			padding: 15px 5px;
+		}
+		.deleteComment {
+			@include wh(100%, 30px);
+			cursor: pointer;
+			font-weight: 550;
+			text-transform: uppercase;
+			font-weight: bold;
+			border: none;
+			transition: all 0.3s;
+			&:hover {
+				transition: all 0.3s;
+				background-color: rgb(235, 52, 52);
+				text-decoration: underline;
+			}
+		}
+	}
+}
+
+#commentContainer {
+	@include flexMid;
+	margin: 10px 0;
+	.addComment {
+		font-family: sans-serif;
+		border-radius: 7px 7px 0 0;
+		width: 90%;
+		&__Title {
+			font-weight: 550;
+			background-color: lightgray;
+			text-align: center;
+			text-transform: uppercase;
+			padding: 5px 0;
+			border-radius: 6px 6px 0 0;
+		}
+		#contentText {
+			box-sizing: border-box;
+			display: block;
+			width: 100%;
+			height: 3rem;
+			border: 3px solid lightgray;
+			color: black;
+			background: transparent;
+			outline: none;
+		}
+		#btn {
+			border: none;
+			background-color: lightgray;
+			width: 100%;
+			height: 2rem;
 		}
 	}
 }

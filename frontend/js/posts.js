@@ -1,4 +1,4 @@
-let insertPost = document.querySelector("#js-insertPost");
+let insertPost = document.querySelector(".js-insertPost");
 let id = [];
 
 fetch("http://localhost:3000/api/post/")

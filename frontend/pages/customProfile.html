@@ -36,7 +36,7 @@
 						>
 					</li>
 					<li>
-						<a href="./profile.html" class="link active" id="profil"
+						<a href="./profile.html" class="link" id="profil"
 							><i class="fas fa-user"></i>&nbsp; Profil</a
 						>
 					</li>
@@ -45,16 +45,34 @@
 		</header>
 
 		<main>
-			<div id="js-insertLogModale"></div>
-			<div id="JS-inserProfile"></div>
-			<div id="customProfile">
-				<a href="./customProfile.html" id="butonCustom">
-					<p id="customprofileText">
-						Modifiez votre profile !
-						<i class="fas fa-user-cog" id="iconCustom"></i>
-					</p>
-				</a>
-			</div>
+			<form id="updateUser">
+				<div id="username"></div>
+				<div id="email"></div>
+				<h2>Changer de nom d'uttilisateur</h2>
+				<input
+					type="text"
+					class="input"
+					id="inputUsername"
+					placeholder="nouveau nom d'uttilisateur"
+				/>
+				<h2>Changer d'adresse email</h2>
+				<input
+					type="text"
+					class="input"
+					id="inputMail"
+					placeholder="nouvel adresse email"
+				/>
+				<h2>Changer de mot de passe</h2>
+				<input
+					type="text"
+					class="input"
+					id="inputPassword"
+					placeholder="nouveau mot de passe"
+				/>
+				<button type="submit" id="submitUpdate">
+					Confirmer les modifications
+				</button>
+			</form>
 		</main>
 
 		<footer>
@@ -73,10 +91,7 @@
 			</p>
 		</footer>
 
-		<script type="module" src="../js/Utils/isAuth.js"></script>
-		<script src="../js/Utils/modales.js"></script>
-		<script src="../js/profil.js"></script>
-		<!-- <script src=""></script> -->
+		<script src="../js/uptadeProfile.js"></script>
 		<!-- <script src=""></script> -->
 		<!-- <script src=""></script> -->
 	</body>

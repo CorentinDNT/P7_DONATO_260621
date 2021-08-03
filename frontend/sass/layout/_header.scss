@@ -36,7 +36,7 @@
 			float: right;
 			margin-right: 20px;
 			li {
-				display: inline-block; /*met les éléments de la ligne en liste horizontale*/
+				display: inline-block; /*supprimer et remplacer par flex dans une querry*/
 				line-height: 50px;
 				margin: 0 5px;
 				.link {

@@ -1,0 +1,59 @@
+#JS-inserProfile {
+	@include flexMid;
+
+	font-family: sans-serif;
+
+	.profile {
+		@include flexMid;
+		background-color: rgba(0, 0, 0, 0.911);
+		width: 85%;
+		margin: 25px 0;
+
+		flex-direction: column;
+		#showUsername {
+			color: white;
+			text-transform: uppercase;
+			padding: 5px 0;
+		}
+		#showAdmin {
+			text-transform: uppercase;
+			padding: 5px 0;
+			color: rgb(238, 20, 20);
+		}
+		#picsContainer {
+			@include flexMid;
+			width: 90%;
+			object-fit: cover;
+			#profilePics {
+				align-self: center;
+				@include wh(25%);
+			}
+		}
+	}
+}
+
+#customProfile {
+	@include flexMid;
+
+	margin-bottom: 30px;
+	#butonCustom {
+		@include flexMid;
+
+		flex-direction: column;
+
+		border: black 3px solid;
+		border-radius: 50px;
+		width: 85%;
+		height: 40px;
+		background-color: transparent;
+		cursor: pointer;
+		#customprofileText {
+			padding: 10px;
+			font-family: sans-serif;
+			font-weight: bold;
+			text-transform: uppercase;
+			#iconCustom {
+			}
+		}
+	}
+}

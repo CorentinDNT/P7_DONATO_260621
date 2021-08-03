@@ -46,14 +46,12 @@ if (!localStorage.token) {
 		})
 			.then((res) => res.json())
 			.then((value) => {
-				const tokenRegisteringSplited = value.message.split(" ");
-				console.log("token splited by space");
-				console.log(tokenRegisteringSplited);
+				const token = value.message;
+				console.log(token);
 
-				const tokenRegister = tokenRegisteringSplited[5];
-				console.log(tokenRegister);
+				localStorage.setItem("token", JSON.stringify(token));
 
-				localStorage.setItem("token", JSON.stringify(tokenRegister));
+				window.location.reload();
 			})
 			.catch((e) => window.alert("connexion a échouée"));
 	});

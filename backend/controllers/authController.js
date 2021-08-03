@@ -50,7 +50,7 @@ exports.userCreate = async (req, res, next) => {
 		await newUser.save();
 		const token = await jwt.generateTokenForUser(newUser);
 		return res.status(201).json({
-			message: "l'uttilisateur " + username + " créer avec succès!" + token,
+			message: token,
 		});
 	} catch (error) {
 		return res.status(500).json({ error });
