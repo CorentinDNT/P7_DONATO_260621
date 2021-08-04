@@ -25,6 +25,7 @@
 			width: 90%;
 			object-fit: cover;
 			#profilePics {
+				border-radius: 100%;
 				align-self: center;
 				@include wh(25%);
 			}

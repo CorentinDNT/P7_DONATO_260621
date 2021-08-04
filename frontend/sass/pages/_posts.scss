@@ -1,0 +1,41 @@
+#addPost {
+	@include flexMid;
+	margin: 10px 0;
+	.addPost {
+		font-family: sans-serif;
+		border-radius: 7px 7px 0 0;
+		width: 90%;
+		&__Title {
+			font-weight: 550;
+			background-color: lightgray;
+			text-align: center;
+			text-transform: uppercase;
+			padding: 5px 0;
+			border-radius: 6px 6px 0 0;
+		}
+		#contentText {
+			box-sizing: border-box;
+			display: block;
+			width: 100%;
+			height: 5rem;
+			border: 3px solid lightgray;
+			color: black;
+			background: transparent;
+		}
+		#contentTitle {
+			box-sizing: border-box;
+			display: block;
+			width: 100%;
+			height: 2rem;
+			border: 3px solid lightgray;
+			color: black;
+			background: transparent;
+		}
+		#btnPostPost {
+			border: none;
+			background-color: lightgray;
+			width: 100%;
+			height: 2rem;
+		}
+	}
+}

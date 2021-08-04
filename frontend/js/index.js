@@ -30,7 +30,7 @@ fetch("http://localhost:3000/api/post/")
 				console.log(message, "id du post :", +i + 1);
 
 				const messageItem = `
-			    <a href="../pages/post.html?id=${message.id}" class="link-id">
+			    <a href="./pages/post.html?id=${message.id}" class="link-id">
 			        <figure class="figure">
                     <img src="${message.User.image}" id="userPicture"/>
 			            <figcaption class="caption">
@@ -43,28 +43,6 @@ fetch("http://localhost:3000/api/post/")
 
 				insertPost.insertAdjacentHTML("beforeend", messageItem);
 			}
-			btnSendPost.addEventListener("click", (e) => {
-				e.preventDefault();
-
-				const psotBody = {
-					UserId: userId,
-					title: document.querySelector("#contentTitle").value,
-					content: document.querySelector("#contentText").value,
-				};
-
-				console.log("psotBody");
-				console.log(psotBody);
-
-				fetch("http://localhost:3000/api/post/", {
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify(psotBody),
-				})
-					.then((res) => res.json())
-					.then((value) => {
-						window.location.reload();
-					});
-			});
 		});
 	})
 	.catch();

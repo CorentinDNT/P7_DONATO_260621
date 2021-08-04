@@ -25,10 +25,11 @@
 
 			background-color: lightgrey;
 			border-radius: 11px 11px 0 0;
-			padding: 5px 10%;
+			padding: 10px 10%;
 
 			text-align: center;
 			font-weight: 550;
+			font-size: 1.3rem;
 			text-transform: uppercase;
 		}
 		.figure {
@@ -38,26 +39,29 @@
 			align-items: flex-start;
 
 			flex-wrap: wrap;
-
-			border-radius: 15px 15px 15px 15px;
+			background-color: lightgray;
 			#userPicture {
 				@include wh(35%, 100%);
 				margin: 0;
-				border-radius: 13px 0 0 13px;
+				border-radius: 120%;
 				object-fit: cover;
 			}
 			.caption {
-				height: 100%;
+				@include flexMid;
+				flex-wrap: wrap;
+
+				position: relative;
+
 				width: 65%;
 				border-radius: 0 15px 15px 0;
-				background-color: #fff;
+				background-color: lightgray;
 				#postTitle {
 					background-color: #294b83;
 					color: #fff;
 					font-weight: 550;
-
+					border-radius: 20px 0 0 20px;
 					padding: 5px;
-
+					width: 100%;
 					text-transform: uppercase;
 					text-align: center;
 					text-decoration: underline;
@@ -65,9 +69,26 @@
 				#postContent {
 					background-color: lightgray;
 
+					width: 100%;
 					padding: 5px;
 					font-weight: 550;
 				}
+			}
+		}
+		.deletePost {
+			width: 100%;
+			height: 2.8rem;
+			background-color: transparent;
+			border: none;
+			cursor: pointer;
+			font-weight: 550;
+			text-transform: uppercase;
+			border-radius: 0 0 15px 15px;
+			transition: all 0.5s;
+			&:hover {
+				background-color: rgb(235, 52, 52);
+				transition: all 0.5s;
+				text-decoration: underline;
 			}
 		}
 	}

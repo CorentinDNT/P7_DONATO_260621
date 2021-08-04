@@ -53,14 +53,8 @@ exports.getComments = async (req, res) => {
 exports.deleteComment = async (req, res) => {
 	try {
 		const id = req.params.id;
-		const password = req.body.password;
+		// const password = req.body.password;
 		const isAdmin = jwt.isAdmin(req);
-
-		if (!password) {
-			return res
-				.status(401)
-				.json({ message: "veuillez entrer vôtre mot de passe" });
-		}
 
 		const comment = await db.Comment.findOne({
 			where: { id },
@@ -79,16 +73,16 @@ exports.deleteComment = async (req, res) => {
 		}
 
 		//Confiramtion du mot de passe pour que n'importe qui ne puisse pas delete
-		const isTruePassword = await bcrypt.compare(
-			password,
-			comment.User.password
-		);
-		if (!isTruePassword) {
-			return res.status(401).json({
-				message:
-					"ce commentaire n'est pas le votre il vous est donc impossible de le suprrimer",
-			});
-		}
+		// const isTruePassword = await bcrypt.compare(
+		// 	password,
+		// 	comment.User.password
+		// );
+		// if (!isTruePassword) {
+		// 	return res.status(401).json({
+		// 		message:
+		// 			"ce commentaire n'est pas le votre il vous est donc impossible de le suprrimer",
+		// 	});
+		// }
 
 		await comment.destroy();
 		return res

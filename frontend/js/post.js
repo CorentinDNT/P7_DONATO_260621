@@ -48,6 +48,7 @@ fetch("http://localhost:3000/api/post/" + postId)
                         <p id='postContent'>${post.content}</p>
                     </figcaption> 
                 </figure>
+				<button class='deletePost' id='js-deletePost'>Supprimer le post</button>
 			</div>
             `;
 
@@ -74,6 +75,18 @@ fetch("http://localhost:3000/api/post/" + postId)
 						window.location.reload();
 					});
 			});
+
+			const deleteButton = document.querySelector("#js-deletePost");
+
+			deleteButton.addEventListener("click", (e) => {
+				fetch("http://localhost:3000/api/post/" + postId, {
+					method: "DELETE",
+				}).then((res) =>
+					res.json().then((value) => {
+						console.log(value);
+					})
+				);
+			});
 		});
 	})
 	.catch();
@@ -84,6 +97,19 @@ console.log("postId");
 
 fetch("");
 const insertComment = document.querySelector("#js-insertComment");
+
+const bodyDelete = {
+	UserId: userId,
+};
+
+const parsedToken = JSON.parse(token);
+
+console.log("bodyDelete");
+console.log(bodyDelete);
+console.log("bodyDelete");
+console.log("parsedToken");
+console.log(parsedToken);
+console.log("parsedToken");
 
 fetch("http://localhost:3000/api/post/" + postId + "/comment").then((res) => {
 	console.log(res.status + " fetch numéro 2");
@@ -97,7 +123,7 @@ fetch("http://localhost:3000/api/post/" + postId + "/comment").then((res) => {
 		}
 		for (let i = 0; i < value.length; i++) {
 			const comment = value[i];
-			console.log(comment, "commentaire numéro ", +i);
+			console.log(comment, "commentaire numéro ", i);
 
 			const commentItem = `
 			<div class="commentContainer">
@@ -109,15 +135,33 @@ fetch("http://localhost:3000/api/post/" + postId + "/comment").then((res) => {
 					<p>${comment.content}</p>
 				</div>
 
-				<button class='deleteComment' id='js-deleteSelf'>Supprimer le commentaire</button>
+				<button class='deleteComment' id='js-deleteSelf${comment.id}'>Supprimer le commentaire</button>
 				</div>
 			`;
 
 			insertComment.insertAdjacentHTML("beforeend", commentItem);
 
-			const deleteCom = document.querySelectorAll(".deleteComment");
-			console.log("deleteCom");
-			console.log(deleteCom);
+			const deleteBtn = document.getElementById("js-deleteSelf" + comment.id);
+			deleteBtn.addEventListener("click", (e) => {
+				console.log("token");
+				console.log(token);
+				console.log("token");
+				console.log("bodyDelete");
+				console.log(bodyDelete);
+				console.log("bodyDelete");
+				fetch("http://localhost:3000/api/comment/" + comment.id, {
+					method: "DELETE",
+					headers: {
+						Authorization: "Bearer " + parsedToken,
+					},
+					body: JSON.stringify(bodyDelete),
+				})
+					.then((res) => res.json())
+					.then((value) => {
+						console.log(value);
+						window.location.reload();
+					});
+			});
 		}
 	}).catch;
 });
