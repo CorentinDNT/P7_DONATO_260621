@@ -24,6 +24,8 @@ const passwordRegEX = /^(?=.*\d).{4,8}$/;
 exports.getUser = async (req, res) => {
 	try {
 		const id = req.params.id;
+		const newPassword = req.body.password;
+
 		const user = await db.User.findOne({
 			attributes: ["username", "email", "image", "isAdmin"],
 			where: { id },
@@ -40,70 +42,43 @@ exports.getUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
 	try {
 		const id = req.params.id;
-		const usernameChanged = req.body.newUsername;
-		const emailChanged = req.body.newEmail;
-		const passwordChanged = req.body.newPassword;
-		const password = req.body.password;
-
 		const user = await db.User.findOne({ where: { id } });
+		const newUsernameSended = req.body.username;
+		const newEmailSended = req.body.email;
 
-		if (!user) {
-			return res.status(404).json({ error: "uttilisateur introuvale" });
-		}
-
-		const isItTruePassword = await bcrypt.compare(password, user.password);
-		if (!isItTruePassword) {
-			return res.status(401).json({ error: "mot de passe incorrect" });
-		}
-
-		if (usernameChanged) {
-			const userExist = await db.User.findOne({
-				where: { username: usernameChanged },
-			});
-			if (userExist) {
-				return res.status(400).json({
-					error: "nom d'uttilisateur déjà existant merci d'en choisir un autre",
-				});
-			}
-		}
-
-		if (emailChanged) {
-			if (!TESTER_LA_REGEX) {
-				//TESTER LA REGEX DU MAIL ------------------------------------------------
-				return res.status(400).json({ error: "email invalide " });
-			} else {
-				const userExist = await db.User.findOne({
-					where: { email: emailChanged },
-				});
-				if (userExist) {
-					return res.status(400).json({ error: "email déjà uttilisé" });
-				}
-			}
-		}
-
-		if (passwordChanged) {
-			if (!TESTER_LE_MDP) {
-				return res
-					.status(400)
-					.json({ error: "force du mot de passe insuffisante" });
-			}
-		}
-
-		const theNewUsername = usernameChanged ? usernameChanged : user.username;
-		const theNewEmail = emailChanged ? emailChanged : user.email;
-		const theNewPassword = passwordChanged
-			? await bcrypt.hash(passwordChanged, 10)
+		const newUsername = newUsernameSended ? newUsernameSended : user.username;
+		const newEmail = newEmailSended ? newEmailSended : user.email;
+		const newPasswordSended = req.body.newPassword;
+		const newPassword = newPasswordSended
+			? await bcrypt.hash(newPasswordSended, 5)
 			: user.password;
 
-		user.username = theNewUsername;
-		user.email = theNewEmail;
-		user.password = theNewPassword;
+		if (!user) {
+			throw new Error("Désolé, uttilisateur introuvale");
+		}
 
-		await user.save();
+		const userToUpdate = await db.User.update(
+			{
+				username: newUsername,
+				email: newEmail,
+				password: newPassword,
+			},
+			{
+				where: { id },
+			}
+		);
 
-		return res.status(200).json({ message: "informations mise à jour" });
+		if (!userToUpdate) {
+			throw new Error(
+				"Désolé, quelques chose s'est mal passé veuillez rééssayer"
+			);
+		}
+		res.status(200).json({
+			user: userToUpdate.isAdmin,
+			message: "Votre compte a été mis à jour",
+		});
 	} catch (error) {
-		return res.status(500).json({ error });
+		res.status(400).json({ error: error.message });
 	}
 };
 

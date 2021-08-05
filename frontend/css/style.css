@@ -258,7 +258,6 @@ footer p {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  border: 3px solid red;
 }
 .js-insertPost .link-id {
   display: flex;
@@ -285,7 +284,6 @@ footer p {
   justify-content: center;
   align-items: center;
   border-radius: 15px 15px 15px 15px;
-  border: 3px solid green;
 }
 .js-insertPost .link-id .figure #userPicture {
   margin: 0;
@@ -545,6 +543,61 @@ footer p {
   font-weight: bold;
   text-transform: uppercase;
 }
+#formContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+}
+#formContainer #updateProfile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  background-color: lightgray;
+  width: 90%;
+  padding: 15px 0;
+  border-radius: 20px;
+  margin: 30px 0;
+}
+#formContainer #updateProfile #username {
+  font-weight: 550;
+  margin-bottom: 10px;
+}
+#formContainer #updateProfile #email {
+  font-weight: 550;
+  margin-bottom: 10px;
+}
+#formContainer #updateProfile .input {
+  border: 0;
+  padding: 0 5px;
+  width: 65%;
+  height: 1.6rem;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  transition: all 0.1s;
+}
+#formContainer #updateProfile .input:hover {
+  border: 2px solid #4040a0;
+  transition: all 0.1s;
+}
+#formContainer #updateProfile #submitChanges {
+  width: 35%;
+  height: 3rem;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  transition: all 0.3s;
+  cursor: pointer;
+  padding: 0 25px;
+}
+#formContainer #updateProfile #submitChanges:hover {
+  background-color: green;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
 #addPost {
   display: flex;
   justify-content: center;

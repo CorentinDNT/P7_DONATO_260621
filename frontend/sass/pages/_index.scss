@@ -155,7 +155,6 @@
 .js-insertPost {
 	@include flexMid;
 	flex-wrap: wrap;
-	border: 3px solid red;
 
 	.link-id {
 		@include flexMid;
@@ -179,8 +178,6 @@
 			@include flexMid;
 
 			border-radius: 15px 15px 15px 15px;
-
-			border: 3px solid green;
 			#userPicture {
 				margin: 0;
 				border-radius: 13px 0 0 13px;

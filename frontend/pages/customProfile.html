@@ -45,48 +45,38 @@
 		</header>
 
 		<main>
-			<form id="updateUsername">
-				<div id="username"></div>
-				<div id="email"></div>
-				<h2>Changer de nom d'uttilisateur</h2>
-				<input
-					type="text"
-					class="input"
-					id="inputUsername"
-					placeholder="nouveau nom d'uttilisateur"
-				/>
-				<button type="submit" id="submitUsername">Changer le pseudo</button>
-			</form>
+			<div id="formContainer">
+				<form id="updateProfile">
+					<div id="username">USERNAME</div>
+					<div id="email">EMAIL</div>
+					<h2>Changer de nom d'uttilisateur</h2>
+					<input
+						type="text"
+						class="input"
+						id="inputUsername"
+						placeholder="nouveau nom d'uttilisateur"
+					/>
 
-			<form id="updateMail">
-				<h2>Changer d'adresse email</h2>
-				<input
-					type="text"
-					class="input"
-					id="inputMail"
-					placeholder="nouvel adresse email"
-				/>
-				<button type="submit" id="submitMail">Changer l'Email</button>
-			</form>
+					<h2>Changer d'adresse email</h2>
+					<input
+						type="text"
+						class="input"
+						id="inputMail"
+						placeholder="nouvel adresse email"
+					/>
 
-			<form id="updatePassword">
-				<h2>Changer de mot de passe</h2>
-				<input
-					type="text"
-					class="input"
-					id="inputOldPassword"
-					placeholder="Acien mot de passe"
-				/>
-				<input
-					type="text"
-					class="input"
-					id="inputPassword"
-					placeholder="nouveau mot de passe"
-				/>
-				<button type="submit" id="submitPassword">
-					Changer de mot de passe
-				</button>
-			</form>
+					<h2>Changer de mot de passe</h2>
+					<input
+						type="text"
+						class="input"
+						id="inputPassword"
+						placeholder="nouveau mot de passe"
+					/>
+					<button type="submit" id="submitChanges">
+						Confirmer les modifications
+					</button>
+				</form>
+			</div>
 		</main>
 
 		<footer>

@@ -27,9 +27,3 @@ module.exports = (sequelize, DataTypes) => {
 	);
 	return Like;
 };
-/*
-	Rate.associate = (models) => {
-		Rate.belongsTo(models.User);
-		Rate.belongsTo(models.Post);
-	};
-*/

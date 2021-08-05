@@ -5,6 +5,15 @@ const db = require("../models");
 const jwt = require("../middleware/jwt.utils");
 const bcrypt = require("bcrypt");
 
+/*
+
+     _'O
+    / /\_
+    _/\
+      /
+     
+*/
+
 exports.createPost = async (req, res) => {
 	try {
 		const UserId = req.body.UserId;
@@ -177,9 +186,11 @@ exports.deletePost = async (req, res) => {
 	if (!post) {
 		return res.status(404).json({ error: "post introuvable !" });
 	}
+
 	const deletingPost = await db.Post.destroy({
 		where: { id: PostId },
 	});
+
 	if (!deletingPost) {
 		throw new Error("veuillez réessayer plus tard, post introuvable");
 	} else {

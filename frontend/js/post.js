@@ -17,7 +17,9 @@ let atobToken = atob(splitedToken[1]);
 console.log(atobToken);
 
 let atobParse = JSON.parse(atobToken);
+console.log("atobParse");
 console.log(atobParse);
+console.log("atobParse");
 
 const userId = atobParse.userId;
 console.log(userId);
@@ -26,6 +28,7 @@ fetch("http://localhost:3000/api/post/" + postId)
 	.then((res) => {
 		console.log(res);
 		res.json().then((value) => {
+			const constPost = value.post;
 			console.log(value.post);
 			console.log(" ");
 			console.log("                                              post.User");
@@ -54,6 +57,10 @@ fetch("http://localhost:3000/api/post/" + postId)
 
 			insertPostId.insertAdjacentHTML("beforeend", selectedPost);
 
+			console.log("constPost");
+			console.log(constPost.User.id);
+			console.log("constPost");
+
 			btnSendForm.addEventListener("click", (e) => {
 				e.preventDefault();
 
@@ -79,13 +86,17 @@ fetch("http://localhost:3000/api/post/" + postId)
 			const deleteButton = document.querySelector("#js-deletePost");
 
 			deleteButton.addEventListener("click", (e) => {
-				fetch("http://localhost:3000/api/post/" + postId, {
-					method: "DELETE",
-				}).then((res) =>
-					res.json().then((value) => {
-						console.log(value);
-					})
-				);
+				if (atobParse.isAdmin == true || constPost.User.id == userId) {
+					fetch("http://localhost:3000/api/post/" + postId, {
+						method: "DELETE",
+					}).then((res) =>
+						res.json().then((value) => {
+							console.log(value);
+
+							window.location.reload();
+						})
+					);
+				}
 			});
 		});
 	})
@@ -141,26 +152,26 @@ fetch("http://localhost:3000/api/post/" + postId + "/comment").then((res) => {
 
 			insertComment.insertAdjacentHTML("beforeend", commentItem);
 
+			console.log(atobParse.isAdmin);
+			console.log(atobParse.isAdmin);
+			console.log(atobParse.isAdmin);
+			console.log(atobParse.isAdmin);
 			const deleteBtn = document.getElementById("js-deleteSelf" + comment.id);
 			deleteBtn.addEventListener("click", (e) => {
-				console.log("token");
-				console.log(token);
-				console.log("token");
-				console.log("bodyDelete");
-				console.log(bodyDelete);
-				console.log("bodyDelete");
-				fetch("http://localhost:3000/api/comment/" + comment.id, {
-					method: "DELETE",
-					headers: {
-						Authorization: "Bearer " + parsedToken,
-					},
-					body: JSON.stringify(bodyDelete),
-				})
-					.then((res) => res.json())
-					.then((value) => {
-						console.log(value);
-						window.location.reload();
-					});
+				if (atobParse.isAdmin || comment.User.id == userId) {
+					fetch("http://localhost:3000/api/comment/" + comment.id, {
+						method: "DELETE",
+						headers: {
+							Authorization: "Bearer " + parsedToken,
+						},
+						body: JSON.stringify(bodyDelete),
+					})
+						.then((res) => res.json())
+						.then((value) => {
+							console.log(value);
+							window.location.reload();
+						});
+				}
 			});
 		}
 	}).catch;

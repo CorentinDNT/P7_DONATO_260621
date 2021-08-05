@@ -24,20 +24,34 @@ console.log(user);
 /*
  * Appélations HTML
  */
-const submitUser = document.querySelector("#submitUsername");
-const submitMail = document.querySelector("#submitMail");
-const submitPass = document.querySelector("#submitPassword");
+const submitModifications = document.querySelector("#submitChanges");
+const usernameDiv = document.querySelector("#username");
+const mailDiv = document.querySelector("#email");
 
-submitUser.addEventListener("click", (e) => {
+submitModifications.addEventListener("click", (e) => {
 	e.preventDefault();
 
-	const actualName = user.username;
-	const actualMail = user.email;
-	const password = document.querySelector("#inputOldPassword").value;
+	const bodyUpdate = {
+		username: document.querySelector("#inputUsername").value,
+		email: document.querySelector("#inputMail").value,
+		newPassword: document.querySelector("#inputPassword").value,
+	};
+	console.log("bodyUpdate");
+	console.log(bodyUpdate);
 
-	const newUsername = document.querySelector("#inputUsername").value;
-	const newEmail = document.querySelector("#inputMail").value;
-	const newPassword = document.querySelector("#inputPassword").value;
-
-	const changeUsername = { newUsername };
+	fetch("http://localhost:3000/api/user/" + userId, {
+		method: "PUT",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(bodyUpdate),
+	})
+		.then((res) => res.json())
+		.then((value) => {
+			console.log(value);
+		});
 });
+
+/*
+ *    "username": "fabien",
+ *   "email": "fabien@gmail.com",
+ *   "newPassword": "fabien"
+ */
