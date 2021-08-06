@@ -34,8 +34,8 @@ fetch("http://localhost:3000/api/post/")
 			        <figure class="figure">
                     <img src="${message.User.image}" id="userPicture"/>
 			            <figcaption class="caption">
-			                <p>Titre : ${message.title}</p>
-			                <p>Nom : ${message.content}</p>
+			                <p class='titleCaption'>Titre : ${message.title}</p>
+			                <p class='textCaption'>${message.content}</p>
 			            </figcaption>
 			        </figure>
 			    </a>

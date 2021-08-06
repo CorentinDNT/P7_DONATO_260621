@@ -171,3 +171,22 @@
 		}
 	}
 }
+
+@include media(870px) {
+	#commentContainer {
+		.addComment {
+			width: 60%;
+		}
+	}
+	#js-insertComment {
+		.commentContainer {
+			width: 60%;
+		}
+	}
+	#js-insertPostById {
+		.postBody {
+			margin: 30px;
+			width: 60%;
+		}
+	}
+}

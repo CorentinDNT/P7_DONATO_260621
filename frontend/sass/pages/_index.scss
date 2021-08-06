@@ -155,7 +155,7 @@
 .js-insertPost {
 	@include flexMid;
 	flex-wrap: wrap;
-
+	font-family: sans-serif;
 	.link-id {
 		@include flexMid;
 		flex-direction: row;
@@ -175,21 +175,70 @@
 		}
 		.figure {
 			@include wh(100%);
-			@include flexMid;
+			display: flex;
+			justify-content: start;
+			align-items: flex-start;
 
-			border-radius: 15px 15px 15px 15px;
+			border-radius: 15px;
+			flex-wrap: wrap;
+			background-color: lightgray;
 			#userPicture {
+				@include wh(35%, 100%);
 				margin: 0;
-				border-radius: 13px 0 0 13px;
-				width: 35%;
-				height: 100%;
+				border-radius: 100%;
 				object-fit: cover;
 			}
 			.caption {
-				height: 100%;
+				@include flexMid;
+				flex-wrap: wrap;
+
+				position: relative;
+
 				width: 65%;
 				border-radius: 0 15px 15px 0;
-				background-color: #fff;
+				background-color: lightgray;
+				flex-direction: column;
+				.titleCaption {
+					background-color: #294b83;
+					color: #fff;
+					font-weight: 550;
+					border-radius: 20px 15px 0 20px;
+					margin-bottom: 15px;
+					padding: 10px 5px;
+					width: 100%;
+					text-transform: uppercase;
+					text-align: center;
+					text-decoration: underline;
+				}
+				.textCaption {
+					background-color: lightgray;
+
+					width: 100%;
+					padding: 0 10px;
+					font-weight: 550;
+				}
+			}
+		}
+	}
+}
+
+@include media(870px) {
+	.js-insertPost {
+		flex-direction: row;
+		.link-id {
+			@include wh(40%, 100%);
+			margin: 2.3% 5%;
+			&:hover {
+			}
+			.figure {
+				#userPicture {
+				}
+				.caption {
+					.titleCaption {
+					}
+					.textCaption {
+					}
+				}
 			}
 		}
 	}
