@@ -132,6 +132,17 @@ fetch("http://localhost:3000/api/post/" + postId + "/comment").then((res) => {
 			console.log(value.message);
 			const noComment = value.message;
 		}
+
+		const valueSort = value.sort(function (a, b) {
+			if (a.createdAt > b.createdAt) {
+				return -1;
+			}
+			if (a.createdAt < b.createdAt) {
+				return 1;
+			}
+			return 0;
+		});
+
 		for (let i = 0; i < value.length; i++) {
 			const comment = value[i];
 			console.log(comment, "commentaire numéro ", i);
@@ -152,9 +163,7 @@ fetch("http://localhost:3000/api/post/" + postId + "/comment").then((res) => {
 
 			insertComment.insertAdjacentHTML("beforeend", commentItem);
 
-			console.log(atobParse.isAdmin);
-			console.log(atobParse.isAdmin);
-			console.log(atobParse.isAdmin);
+			console.log("atobParse.isAdmin");
 			console.log(atobParse.isAdmin);
 			const deleteBtn = document.getElementById("js-deleteSelf" + comment.id);
 			deleteBtn.addEventListener("click", (e) => {

@@ -25,6 +25,17 @@ fetch("http://localhost:3000/api/post/")
 			console.log(postsArray[0]);
 			console.log("postsArray[0].User");
 			console.log(postsArray[0].User.image);
+
+			const sortArray = postsArray.sort(function (a, b) {
+				if (a.createdAt > b.createdAt) {
+					return -1;
+				}
+				if (a.createdAt < b.createdAt) {
+					return 1;
+				}
+				return 0;
+			});
+
 			for (let i = 0; i < postsArray.length; i++) {
 				const message = postsArray[i];
 				console.log(message, "id du post :", +i + 1);
