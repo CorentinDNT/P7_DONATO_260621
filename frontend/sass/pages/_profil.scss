@@ -7,7 +7,7 @@
 		@include flexMid;
 		background-color: rgba(0, 0, 0, 0.911);
 		width: 85%;
-		margin: 25px 0;
+		margin: 70px 0;
 
 		flex-direction: column;
 		#showUsername {
@@ -55,6 +55,24 @@
 			text-transform: uppercase;
 			#iconCustom {
 			}
+		}
+	}
+}
+
+#css-disconnect {
+	@include flexMid;
+	#js-disconnect {
+		width: 90%;
+		height: 3rem;
+		margin: 10% 0 5% 0;
+		border-radius: 30px;
+		border: none;
+		text-transform: uppercase;
+		font-weight: bold;
+		transition: all 0.2s;
+		&:hover {
+			transition: all 0.2s;
+			background-color: rgb(230, 50, 50);
 		}
 	}
 }

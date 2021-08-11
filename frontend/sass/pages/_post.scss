@@ -91,6 +91,21 @@
 				text-decoration: underline;
 			}
 		}
+		.updatePost {
+			width: 100%;
+			height: 2.8rem;
+			background-color: transparent;
+			border: none;
+			cursor: pointer;
+			font-weight: 550;
+			text-transform: uppercase;
+			transition: all 0.5s;
+			&:hover {
+				background-color: rgb(54, 175, 60);
+				transition: all 0.5s;
+				text-decoration: underline;
+			}
+		}
 	}
 }
 

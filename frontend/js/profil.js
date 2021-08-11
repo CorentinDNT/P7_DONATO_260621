@@ -34,3 +34,11 @@ fetch("http://localhost:3000/api/user/" + userId).then((res) =>
 			.insertAdjacentHTML("beforeend", insertProfile);
 	})
 );
+
+const disconnectBtn = document.querySelector("#js-disconnect");
+
+disconnectBtn.addEventListener("click", (e) => {
+	localStorage.clear();
+
+	window.location.href = "../index.html";
+});

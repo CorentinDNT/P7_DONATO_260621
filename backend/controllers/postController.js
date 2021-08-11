@@ -82,10 +82,6 @@ exports.getAllPosts = async (req, res) => {
 exports.updatePost = async (req, res) => {
 	try {
 		const PostId = req.params.id;
-		const isAdmin = jwt.isAdmin(req);
-
-		const newTitle = req.body.newTitle;
-		const newContent = req.body.newContent;
 
 		const post = await db.Post.findOne({
 			where: { id: PostId },
@@ -93,35 +89,20 @@ exports.updatePost = async (req, res) => {
 		});
 
 		if (!post) {
-			return res.status(404).json({ error: "poste introuvable" });
+			throw new Error("Désolé, impossible de trouver vôtre post");
 		}
 
-		const existantPost = await db.Post.findOne({ where: { title: newTitle } });
-		if (existantPost) {
-			return res
-				.status(400)
-				.json({ error: "Ce titre existe déjà, merci d'en choisir un autre" });
-		}
+		await post.update({
+			userId: req.body.UserId,
+			title: req.body.newTitle,
+			content: req.body.newContent,
+		});
 
-		if (isAdmin) {
-			post.title = newTitle;
-			post.content = newContent;
-
-			await post.save();
-
-			return res
-				.status(200)
-				.json({ message: "changements éffectués par un administrateur" });
-		}
-
-		post.title = newTitle;
-		post.content = newContent;
-
-		await post.save();
-
-		return res.status(200).json({ message: "changements éffectués" });
+		res.status(201).json({
+			message: " Votre post a été mis a jour",
+		});
 	} catch (error) {
-		return res.status(500).json({ error });
+		res.status(400).json({ error: error.message });
 	}
 };
 

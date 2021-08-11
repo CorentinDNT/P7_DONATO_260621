@@ -1,6 +1,5 @@
 const bcrypt = require("bcrypt");
 const jwt = require("../middleware/jwt.utils");
-
 const db = require("../models");
 
 //--- insérer des REGEX ici ---

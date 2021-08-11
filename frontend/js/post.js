@@ -4,25 +4,16 @@ console.log(postId);
 const insertCommentBody = document.querySelector("#js-addComment");
 const insertPostId = document.querySelector("#js-insertPostById");
 const btnSendForm = document.querySelector("#btn");
-// const contentCommentText = document.querySelector("#contentText").value;
-
-// console.log("contentCommentText");
-// console.log(contentCommentText);
 
 const token = localStorage.getItem("token");
 let splitedToken = token.split(".");
-console.log(splitedToken);
-
 let atobToken = atob(splitedToken[1]);
-console.log(atobToken);
-
 let atobParse = JSON.parse(atobToken);
-console.log("atobParse");
-console.log(atobParse);
-console.log("atobParse");
 
 const userId = atobParse.userId;
 console.log(userId);
+
+const parsedToken = JSON.parse(token);
 
 fetch("http://localhost:3000/api/post/" + postId)
 	.then((res) => {
@@ -51,6 +42,12 @@ fetch("http://localhost:3000/api/post/" + postId)
                         <p id='postContent'>${post.content}</p>
                     </figcaption> 
                 </figure>
+
+				<form>
+					<input id='NewTitleText' placeholder='Nouveau titre'/>
+					<input id='NewContentText' placeholder='Nouveau message'/>
+				</form>
+				<button class='updatePost' id='js-updatePost'>Modifier le post</button>
 				<button class='deletePost' id='js-deletePost'>Supprimer le post</button>
 			</div>
             `;
@@ -93,9 +90,36 @@ fetch("http://localhost:3000/api/post/" + postId)
 						res.json().then((value) => {
 							console.log(value);
 
-							window.location.reload();
+							window.location.href = "../index.html";
 						})
 					);
+				}
+			});
+
+			const updateButton = document.querySelector("#js-updatePost");
+
+			updateButton.addEventListener("click", (e) => {
+				e.preventDefault();
+
+				const bodyUpdate = {
+					userId: userId,
+					newTitle: document.querySelector("#NewTitleText").value,
+					newContent: document.querySelector("#NewContentText").value,
+				};
+
+				console.log(bodyUpdate);
+
+				if (atobParse.isAdmin == true || constPost.User.id == userId) {
+					fetch("http://localhost:3000/api/post/" + postId, {
+						method: "PUT",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify(bodyUpdate),
+					})
+						.then((res) => res.json())
+						.then((value) => {
+							console.log(value);
+							window.location.reload();
+						});
 				}
 			});
 		});
@@ -106,42 +130,30 @@ console.log("postId");
 console.log(postId);
 console.log("postId");
 
-fetch("");
 const insertComment = document.querySelector("#js-insertComment");
 
 const bodyDelete = {
 	UserId: userId,
 };
 
-const parsedToken = JSON.parse(token);
-
-console.log("bodyDelete");
-console.log(bodyDelete);
-console.log("bodyDelete");
-console.log("parsedToken");
-console.log(parsedToken);
-console.log("parsedToken");
-
 fetch("http://localhost:3000/api/post/" + postId + "/comment").then((res) => {
 	console.log(res.status + " fetch numéro 2");
 	res.json().then((value) => {
-		console.log("value");
-		console.log(value);
-		console.log("value");
 		if (value.message) {
-			console.log(value.message);
 			const noComment = value.message;
 		}
 
-		const valueSort = value.sort(function (a, b) {
-			if (a.createdAt > b.createdAt) {
-				return -1;
-			}
-			if (a.createdAt < b.createdAt) {
-				return 1;
-			}
-			return 0;
-		});
+		if (value.length) {
+			const valueSort = value.sort(function (a, b) {
+				if (a.createdAt > b.createdAt) {
+					return -1;
+				}
+				if (a.createdAt < b.createdAt) {
+					return 1;
+				}
+				return 0;
+			});
+		}
 
 		for (let i = 0; i < value.length; i++) {
 			const comment = value[i];
@@ -163,8 +175,6 @@ fetch("http://localhost:3000/api/post/" + postId + "/comment").then((res) => {
 
 			insertComment.insertAdjacentHTML("beforeend", commentItem);
 
-			console.log("atobParse.isAdmin");
-			console.log(atobParse.isAdmin);
 			const deleteBtn = document.getElementById("js-deleteSelf" + comment.id);
 			deleteBtn.addEventListener("click", (e) => {
 				if (atobParse.isAdmin || comment.User.id == userId) {

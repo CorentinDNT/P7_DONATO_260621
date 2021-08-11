@@ -2,9 +2,6 @@ const token = localStorage.getItem("token");
 let splitedToken = token.split(".");
 let atobToken = atob(splitedToken[1]);
 let atobParse = JSON.parse(atobToken);
-console.log("atobParse");
-console.log(atobParse);
-console.log("atobParse");
 
 const userId = atobParse.userId;
 console.log(userId);
@@ -21,9 +18,6 @@ const userInStorage = localStorage.getItem("user");
 const user = JSON.parse(userInStorage);
 console.log(user);
 
-/*
- * Appélations HTML
- */
 const submitModifications = document.querySelector("#submitChanges");
 const usernameDiv = document.querySelector("#username");
 const mailDiv = document.querySelector("#email");
@@ -49,9 +43,3 @@ submitModifications.addEventListener("click", (e) => {
 			console.log(value);
 		});
 });
-
-/*
- *    "username": "fabien",
- *   "email": "fabien@gmail.com",
- *   "newPassword": "fabien"
- */

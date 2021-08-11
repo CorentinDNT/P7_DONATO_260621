@@ -36,7 +36,7 @@ fetch("http://localhost:3000/api/post/")
 				return 0;
 			});
 
-			for (let i = 0; i < postsArray.length; i++) {
+			for (let i = 0; i < 5; i++) {
 				const message = postsArray[i];
 				console.log(message, "id du post :", +i + 1);
 
@@ -49,7 +49,7 @@ fetch("http://localhost:3000/api/post/")
 			                <p class='textCaption'>${message.content}</p>
 			            </figcaption>
 			        </figure>
-			    </a>
+			    </a> 
 			    `;
 
 				insertPost.insertAdjacentHTML("beforeend", messageItem);
