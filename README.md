@@ -10,8 +10,8 @@
 
   1. Créer une base de donnée.
   2. Dans le dossier ./backend/config se trouve un fichier config.json
-  3. Remplacer les informations déjà saisies dans ce fichier par les informations de votre base de donnée précédement créee en suivant cet [exemple](https://github.com/CorentinDNT/P7_DONATO_260621/blob/main/backend/config/config.json)
-  4. dans le terminal (toujours dans le dossier backend) executer la commande ``npm start``
+  3. Remplacer les informations déjà saisies dans ce fichier par les informations de votre base de donnée précédement créee en suivant cet [exemple](https://github.com/CorentinDNT/P7_DONATO_260621/blob/main/backend/config/config.json) tout en étant sur d'avoir attribué le bon port (de base 3306 mais dans mon code 3308) ainsi que les identifiants (username et password) de votre uttilisateur mysql
+  5. dans le terminal (toujours dans le dossier backend) executer la commande ``npm start``
 
 ## LANCER LE PROJET
 
