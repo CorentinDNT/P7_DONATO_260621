@@ -49,7 +49,7 @@ fetch("http://localhost:3000/api/post/")
 			                <p class='textCaption'>${message.content}</p>
 			            </figcaption>
 			        </figure>
-			    </a> 
+			    </a>  
 			    `;
 
 				insertPost.insertAdjacentHTML("beforeend", messageItem);

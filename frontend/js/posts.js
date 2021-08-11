@@ -20,11 +20,6 @@ fetch("http://localhost:3000/api/post/")
 		console.log(res);
 		res.json().then((value) => {
 			const postsArray = value.posts;
-			console.log("tableau posts");
-			console.log(postsArray);
-			console.log(postsArray[0]);
-			console.log("postsArray[0].User");
-			console.log(postsArray[0].User.image);
 
 			const sortArray = postsArray.sort(function (a, b) {
 				if (a.createdAt > b.createdAt) {

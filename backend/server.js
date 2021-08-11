@@ -46,13 +46,9 @@ server.on("listening", () => {
 	console.log("Ecoute le " + bind);
 });
 
-/* db.sequelize
+db.sequelize
 	.sync()
 	.then((res) => {
 		server.listen(port);
 	})
-	.catch((error) => console.log(error)); */
-
-/* db.sequelize.sync({ force: true }); */
-
-server.listen(port);
+	.catch((error) => console.log(error));
