@@ -1,17 +1,21 @@
-P7_DONATO_260621
+#P7_DONATO_260621
 
-clôner le projet / repo Git
+## INSTALLER LE BACKEND
+1.clôner le projet / repo Git
+2.ouvrir un terminal dans le repo
+3.Aller dans le dossier Backend avec la commande ``cd ./backend``
+4.installez les dépendences avec ``npm install``
 
-Installez les dépendances comme pour n'importe quel projet(assurez vous d’avoir mySql)
 
-Dans le dossier backend => config => config.json mettez-y votre username et votre password ainsi que les bons ports a uttiliser pour la base de development
+##INITIALISER LE BACKEND
+1.Créer une base de donées
+2.Dans le dossier Backend/config se trouve un fichier config.json
+3.Remplacez les informations déjà saisi dans ce fichier par les inforamtions de votre base de donées précédemment créer en suivant cet [exemple](https://github.com/CorentinDNT/P7_DONATO_260621/blob/main/backend/config/config.json)
+4.dans le terminal (toujours dans le dossier backed) exectutez la commande ``npm start``
 
-créer localement la base de donnée « groupomania »
+##LANCEZ LE PROJET
+1.Allez dans le dossier ./frontend
+2.Ouvrir index.html
+3.Lancez liveServeur
 
-assurez vous que sequelize-cli soit bien installé puis, Dans l'invite de commande faites : cd backend , tapez ensuite: sequelize db:create , puis sequelize db:migrate
-
-faites npm start.
-
-Pour le frontend déplacez vous dans le dossier frontend à l’aide de la commande cd frontend puis npm start
-
-Vous pouvez maintenant vous créer compte et changer la ligne "isAdmin" à 1 pour créer un compte administrateur 
+##C'est parti !
