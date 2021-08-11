@@ -13,10 +13,6 @@
   3. Remplacer les informations déjà saisies dans ce fichier par les informations de votre base de donnée précédement créee en suivant cet [exemple](https://github.com/CorentinDNT/P7_DONATO_260621/blob/main/backend/config/config.json)
   4. dans le terminal (toujours dans le dossier backend) executer la commande ``npm start``
 
-```
-coucou
-```
-
 ## LANCER LE PROJET
 
   1. Aller dans le dossier ./frontend
